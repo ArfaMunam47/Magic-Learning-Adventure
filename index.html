@@ -1,4 +1,5 @@
 <!DOCTYPE html>
+
 <html lang="en">
 <head>
 <meta charset="UTF-8">
@@ -15,6 +16,7 @@
 <a href="#main-content" class="skip-link">Skip to main content</a>
 
 <!-- ================= LOADING SCREEN ================= -->
+
 <div id="loading-screen" class="loading-screen" role="status" aria-live="polite">
   <div class="loading-mascot">
     <img src="assets/images/mascot.svg" alt="" width="140" height="150">
@@ -24,6 +26,7 @@
 </div>
 
 <!-- ================= BACKGROUND (persistent, decorative) ================= -->
+
 <div class="sky-background" aria-hidden="true">
   <div class="cloud cloud1">☁️</div>
   <div class="cloud cloud2">☁️</div>
@@ -37,6 +40,7 @@
 </div>
 
 <!-- ================= TOP TOOLBAR ================= -->
+
 <header class="app-toolbar" id="app-toolbar" aria-label="App controls">
   <button class="tool-btn" id="btn-home" aria-label="Go home">🏠<span>Home</span></button>
   <div class="toolbar-stats" aria-label="Your progress">
@@ -56,9 +60,11 @@
 <main id="main-content">
 
 <!-- ================= LANDING PAGE ================= -->
+
 <section id="screen-landing" class="screen active" aria-label="Welcome page">
 
   <!-- HERO -->
+
   <div class="hero">
     <div class="rainbow-arc" aria-hidden="true"></div>
     <div class="balloon b1" aria-hidden="true">🎈</div>
@@ -74,6 +80,7 @@
   </div>
 
   <!-- STATS -->
+
   <section class="stats-section" aria-label="Statistics">
     <div class="stat-card"><span class="stat-num">12</span><span class="stat-label">Magic Activities</span></div>
     <div class="stat-card"><span class="stat-num">100%</span><span class="stat-label">Offline &amp; Free</span></div>
@@ -82,6 +89,7 @@
   </section>
 
   <!-- FEATURES -->
+
   <section class="features-section" aria-labelledby="features-heading">
     <h2 id="features-heading">A World Built for Every Kind of Learner</h2>
     <div class="features-grid">
@@ -95,6 +103,7 @@
   </section>
 
   <!-- PARENTS -->
+
   <section class="info-section" aria-labelledby="parents-heading">
     <div class="info-media" aria-hidden="true">👪</div>
     <div class="info-text">
@@ -109,6 +118,7 @@
   </section>
 
   <!-- TEACHERS -->
+
   <section class="info-section reverse" aria-labelledby="teachers-heading">
     <div class="info-media" aria-hidden="true">🍎</div>
     <div class="info-text">
@@ -123,6 +133,7 @@
   </section>
 
   <!-- TESTIMONIALS -->
+
   <section class="testimonials-section" aria-labelledby="testimonials-heading">
     <h2 id="testimonials-heading">Happy Grown-Ups</h2>
     <div class="testimonials-grid">
@@ -133,6 +144,7 @@
   </section>
 
   <!-- ACCESSIBILITY HIGHLIGHTS -->
+
   <section class="accessibility-section" aria-labelledby="a11y-heading">
     <h2 id="a11y-heading">Designed With Accessibility at Heart</h2>
     <div class="a11y-grid">
@@ -155,6 +167,7 @@
 </section>
 
 <!-- ================= DASHBOARD ================= -->
+
 <section id="screen-dashboard" class="screen" aria-label="Activity dashboard">
   <div class="dashboard-header">
     <h1>Welcome back, <span id="dashboard-name">Explorer</span>! <span aria-hidden="true">🌈</span></h1>
@@ -166,6 +179,7 @@
 </section>
 
 <!-- ================= ACTIVITY SCREEN (generic container) ================= -->
+
 <section id="screen-activity" class="screen" aria-label="Activity">
   <div class="activity-header">
     <button class="btn-back" id="btn-activity-back" aria-label="Back to dashboard">⬅ Back</button>
@@ -178,6 +192,7 @@
 </section>
 
 <!-- ================= PROFILE SCREEN ================= -->
+
 <section id="screen-profile" class="screen" aria-label="Your profile">
   <div class="activity-header">
     <button class="btn-back" id="btn-profile-back" aria-label="Back to dashboard">⬅ Back</button>
@@ -191,39 +206,44 @@
       <label class="field-label" for="profile-name-input">My Name</label>
       <input id="profile-name-input" class="profile-name-input" type="text" maxlength="20" value="Explorer" aria-label="Edit your name">
 
-      <p class="field-label">Choose an Avatar</p>
-      <div class="avatar-grid" id="avatar-grid" role="list">
-        <!-- avatars injected by JS -->
-      </div>
-    </div>
+  <p class="field-label">Choose an Avatar</p>
+  <div class="avatar-grid" id="avatar-grid" role="list">
+    <!-- avatars injected by JS -->
+  </div>
+</div>
 
-    <div class="profile-stats-card">
-      <h2>My Progress</h2>
-      <div class="progress-row"><span>Level</span><strong id="profile-level">1</strong></div>
-      <div class="xp-bar"><div class="xp-bar-fill" id="profile-xp-fill"></div></div>
-      <div class="progress-grid">
-        <div class="progress-mini"><span>⭐</span><strong id="profile-stars">0</strong><small>Stars</small></div>
-        <div class="progress-mini"><span>🪙</span><strong id="profile-coins">0</strong><small>Coins</small></div>
-        <div class="progress-mini"><span>🎖️</span><strong id="profile-badges">0</strong><small>Badges</small></div>
-        <div class="progress-mini"><span>🏅</span><strong id="profile-trophies">0</strong><small>Trophies</small></div>
-      </div>
-    </div>
+<div class="profile-stats-card">
+  <h2>My Progress</h2>
+  <div class="progress-row"><span>Level</span><strong id="profile-level">1</strong></div>
+  <div class="xp-bar"><div class="xp-bar-fill" id="profile-xp-fill"></div></div>
+  <div class="progress-grid">
+    <div class="progress-mini"><span>⭐</span><strong id="profile-stars">0</strong><small>Stars</small></div>
+    <div class="progress-mini"><span>🪙</span><strong id="profile-coins">0</strong><small>Coins</small></div>
+    <div class="progress-mini"><span>🎖️</span><strong id="profile-badges">0</strong><small>Badges</small></div>
+    <div class="progress-mini"><span>🏅</span><strong id="profile-trophies">0</strong><small>Trophies</small></div>
+  </div>
+</div>
+
   </div>
 </section>
 
 </main>
 
 <!-- ================= CONFETTI CANVAS ================= -->
+
 <canvas id="confetti-canvas" aria-hidden="true"></canvas>
 
 <!-- ================= TOAST / ENCOURAGEMENT ================= -->
+
 <div id="toast" class="toast" role="status" aria-live="polite"></div>
 
 <!-- ================= MASCOT HELPER BUBBLE ================= -->
+
 <div id="mascot-helper" class="mascot-helper" aria-hidden="true">
   <img src="assets/images/mascot.svg" alt="" width="56" height="60">
 </div>
 
 <script src="script.js"></script>
+
 </body>
 </html>
