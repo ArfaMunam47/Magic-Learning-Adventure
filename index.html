@@ -1,0 +1,229 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0">
+<title>Magic Learning Adventure — Learn, Play, Smile, and Grow Together</title>
+<meta name="description" content="A magical, accessible learning world for children with autism, ADHD, Down syndrome, dyslexia, speech delays and other learning differences.">
+<link rel="icon" type="image/svg+xml" href="assets/images/favicon.svg">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Baloo+2:wght@500;600;700;800&family=Quicksand:wght@500;600;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="style.css">
+</head>
+<body data-theme="light" data-dyslexia="off">
+
+<a href="#main-content" class="skip-link">Skip to main content</a>
+
+<!-- ================= LOADING SCREEN ================= -->
+<div id="loading-screen" class="loading-screen" role="status" aria-live="polite">
+  <div class="loading-mascot">
+    <img src="assets/images/mascot.svg" alt="" width="140" height="150">
+  </div>
+  <div class="loading-bar"><div class="loading-bar-fill" id="loading-bar-fill"></div></div>
+  <p class="loading-text">Sprinkling magic dust… ✨</p>
+</div>
+
+<!-- ================= BACKGROUND (persistent, decorative) ================= -->
+<div class="sky-background" aria-hidden="true">
+  <div class="cloud cloud1">☁️</div>
+  <div class="cloud cloud2">☁️</div>
+  <div class="cloud cloud3">☁️</div>
+  <div class="star star1">✨</div>
+  <div class="star star2">⭐</div>
+  <div class="star star3">✨</div>
+  <div class="firefly firefly1"></div>
+  <div class="firefly firefly2"></div>
+  <div class="firefly firefly3"></div>
+</div>
+
+<!-- ================= TOP TOOLBAR ================= -->
+<header class="app-toolbar" id="app-toolbar" aria-label="App controls">
+  <button class="tool-btn" id="btn-home" aria-label="Go home">🏠<span>Home</span></button>
+  <div class="toolbar-stats" aria-label="Your progress">
+    <span class="stat-pill" id="stat-stars" title="Stars earned">⭐ <b id="stars-count">0</b></span>
+    <span class="stat-pill" id="stat-coins" title="Coins earned">🪙 <b id="coins-count">0</b></span>
+    <span class="stat-pill" id="stat-level" title="Current level">🏆 <b id="level-count">1</b></span>
+  </div>
+  <div class="toolbar-actions">
+    <button class="tool-btn" id="btn-mute" aria-pressed="false" aria-label="Mute sounds">🔊</button>
+    <button class="tool-btn" id="btn-contrast" aria-pressed="false" aria-label="Toggle high contrast mode">🌓</button>
+    <button class="tool-btn" id="btn-dyslexia" aria-pressed="false" aria-label="Toggle dyslexia-friendly font">🔤</button>
+    <button class="tool-btn" id="btn-fullscreen" aria-label="Toggle fullscreen">⛶</button>
+    <button class="tool-btn" id="btn-profile" aria-label="Open profile"><span id="toolbar-avatar">🐻</span></button>
+  </div>
+</header>
+
+<main id="main-content">
+
+<!-- ================= LANDING PAGE ================= -->
+<section id="screen-landing" class="screen active" aria-label="Welcome page">
+
+  <!-- HERO -->
+  <div class="hero">
+    <div class="rainbow-arc" aria-hidden="true"></div>
+    <div class="balloon b1" aria-hidden="true">🎈</div>
+    <div class="balloon b2" aria-hidden="true">🎈</div>
+    <div class="balloon b3" aria-hidden="true">🎈</div>
+    <img class="hero-mascot" src="assets/images/mascot.svg" alt="Sparkle the star wizard waving hello">
+    <h1 class="hero-title">Magic Learning Adventure</h1>
+    <p class="hero-subtitle">Learn, Play, Smile, and Grow Together.</p>
+    <button class="btn-start" id="btn-start-adventure">
+      <span class="btn-start-icon">🚀</span> Start Adventure
+    </button>
+    <p class="hero-quote" id="daily-quote">Loading today's happy thought…</p>
+  </div>
+
+  <!-- STATS -->
+  <section class="stats-section" aria-label="Statistics">
+    <div class="stat-card"><span class="stat-num">12</span><span class="stat-label">Magic Activities</span></div>
+    <div class="stat-card"><span class="stat-num">100%</span><span class="stat-label">Offline &amp; Free</span></div>
+    <div class="stat-card"><span class="stat-num">4</span><span class="stat-label">Accessibility Modes</span></div>
+    <div class="stat-card"><span class="stat-num">∞</span><span class="stat-label">Smiles Along the Way</span></div>
+  </section>
+
+  <!-- FEATURES -->
+  <section class="features-section" aria-labelledby="features-heading">
+    <h2 id="features-heading">A World Built for Every Kind of Learner</h2>
+    <div class="features-grid">
+      <div class="feature-card"><div class="feature-icon">🔤</div><h3>ABC Learning</h3><p>Drag letters to matching pictures with cheerful sounds and stars.</p></div>
+      <div class="feature-card"><div class="feature-icon">🔢</div><h3>Numbers &amp; Counting</h3><p>Count cute characters and tap the right number.</p></div>
+      <div class="feature-card"><div class="feature-icon">🧩</div><h3>Shapes &amp; Puzzles</h3><p>Fit shapes into outlines and solve gentle picture puzzles.</p></div>
+      <div class="feature-card"><div class="feature-icon">🎨</div><h3>Drawing Pad</h3><p>Free-draw with rainbow brushes, an eraser, and undo.</p></div>
+      <div class="feature-card"><div class="feature-icon">🎵</div><h3>Music Corner</h3><p>Play a friendly piano and discover animal &amp; nature sounds.</p></div>
+      <div class="feature-card"><div class="feature-icon">🫧</div><h3>Calm Corner</h3><p>Breathing animations and bubble popping when little ones need a break.</p></div>
+    </div>
+  </section>
+
+  <!-- PARENTS -->
+  <section class="info-section" aria-labelledby="parents-heading">
+    <div class="info-media" aria-hidden="true">👪</div>
+    <div class="info-text">
+      <h2 id="parents-heading">For Parents</h2>
+      <p>Watch your child build confidence at their own pace. Every activity adjusts to their comfort, tracks gentle progress, and never punishes mistakes — only encourages another try.</p>
+      <ul class="info-list">
+        <li>✔ Progress saved automatically on this device</li>
+        <li>✔ No ads, no accounts, no data leaves your browser</li>
+        <li>✔ Calm Corner is always one tap away</li>
+      </ul>
+    </div>
+  </section>
+
+  <!-- TEACHERS -->
+  <section class="info-section reverse" aria-labelledby="teachers-heading">
+    <div class="info-media" aria-hidden="true">🍎</div>
+    <div class="info-text">
+      <h2 id="teachers-heading">For Teachers</h2>
+      <p>Bring Magic Learning Adventure to the classroom or resource room. Large touch targets, adjustable difficulty, and screen-reader-friendly structure make it easy to include every student.</p>
+      <ul class="info-list">
+        <li>✔ Works offline on any classroom device</li>
+        <li>✔ Keyboard and switch-friendly navigation</li>
+        <li>✔ Clear visual and audio feedback for every action</li>
+      </ul>
+    </div>
+  </section>
+
+  <!-- TESTIMONIALS -->
+  <section class="testimonials-section" aria-labelledby="testimonials-heading">
+    <h2 id="testimonials-heading">Happy Grown-Ups</h2>
+    <div class="testimonials-grid">
+      <blockquote class="testimonial-card">“My son asks to practice his letters now — that never happened before.” <cite>— A parent</cite></blockquote>
+      <blockquote class="testimonial-card">“The Calm Corner has become part of our daily routine at school.” <cite>— A teacher</cite></blockquote>
+      <blockquote class="testimonial-card">“Big buttons, gentle sounds, zero stress. Exactly what we needed.” <cite>— A parent</cite></blockquote>
+    </div>
+  </section>
+
+  <!-- ACCESSIBILITY HIGHLIGHTS -->
+  <section class="accessibility-section" aria-labelledby="a11y-heading">
+    <h2 id="a11y-heading">Designed With Accessibility at Heart</h2>
+    <div class="a11y-grid">
+      <div class="a11y-chip">🔠 Large Fonts</div>
+      <div class="a11y-chip">🌓 High Contrast</div>
+      <div class="a11y-chip">🔤 Dyslexia-Friendly Text</div>
+      <div class="a11y-chip">🎯 Large Touch Targets</div>
+      <div class="a11y-chip">⌨️ Full Keyboard Support</div>
+      <div class="a11y-chip">🗣️ Screen Reader Ready</div>
+      <div class="a11y-chip">🎧 Optional Sound</div>
+      <div class="a11y-chip">🧘 Minimal Distraction Mode</div>
+    </div>
+  </section>
+
+  <footer class="site-footer">
+    <img src="assets/images/favicon.svg" alt="" width="36" height="36">
+    <p>Magic Learning Adventure — made with 💛 for every kind of learner.</p>
+    <p class="footer-fine">No accounts. No ads. No internet required. Your progress lives only in this browser.</p>
+  </footer>
+</section>
+
+<!-- ================= DASHBOARD ================= -->
+<section id="screen-dashboard" class="screen" aria-label="Activity dashboard">
+  <div class="dashboard-header">
+    <h1>Welcome back, <span id="dashboard-name">Explorer</span>! <span aria-hidden="true">🌈</span></h1>
+    <p>Pick an adventure to begin.</p>
+  </div>
+  <div class="dashboard-grid" id="dashboard-grid" role="list">
+    <!-- cards injected by JS -->
+  </div>
+</section>
+
+<!-- ================= ACTIVITY SCREEN (generic container) ================= -->
+<section id="screen-activity" class="screen" aria-label="Activity">
+  <div class="activity-header">
+    <button class="btn-back" id="btn-activity-back" aria-label="Back to dashboard">⬅ Back</button>
+    <h1 id="activity-title">Activity</h1>
+    <div class="activity-header-spacer" aria-hidden="true"></div>
+  </div>
+  <div id="activity-content" class="activity-content">
+    <!-- game markup injected by JS -->
+  </div>
+</section>
+
+<!-- ================= PROFILE SCREEN ================= -->
+<section id="screen-profile" class="screen" aria-label="Your profile">
+  <div class="activity-header">
+    <button class="btn-back" id="btn-profile-back" aria-label="Back to dashboard">⬅ Back</button>
+    <h1>My Profile</h1>
+    <div class="activity-header-spacer" aria-hidden="true"></div>
+  </div>
+
+  <div class="profile-content">
+    <div class="profile-card">
+      <div class="avatar-display" id="avatar-display">🐻</div>
+      <label class="field-label" for="profile-name-input">My Name</label>
+      <input id="profile-name-input" class="profile-name-input" type="text" maxlength="20" value="Explorer" aria-label="Edit your name">
+
+      <p class="field-label">Choose an Avatar</p>
+      <div class="avatar-grid" id="avatar-grid" role="list">
+        <!-- avatars injected by JS -->
+      </div>
+    </div>
+
+    <div class="profile-stats-card">
+      <h2>My Progress</h2>
+      <div class="progress-row"><span>Level</span><strong id="profile-level">1</strong></div>
+      <div class="xp-bar"><div class="xp-bar-fill" id="profile-xp-fill"></div></div>
+      <div class="progress-grid">
+        <div class="progress-mini"><span>⭐</span><strong id="profile-stars">0</strong><small>Stars</small></div>
+        <div class="progress-mini"><span>🪙</span><strong id="profile-coins">0</strong><small>Coins</small></div>
+        <div class="progress-mini"><span>🎖️</span><strong id="profile-badges">0</strong><small>Badges</small></div>
+        <div class="progress-mini"><span>🏅</span><strong id="profile-trophies">0</strong><small>Trophies</small></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+</main>
+
+<!-- ================= CONFETTI CANVAS ================= -->
+<canvas id="confetti-canvas" aria-hidden="true"></canvas>
+
+<!-- ================= TOAST / ENCOURAGEMENT ================= -->
+<div id="toast" class="toast" role="status" aria-live="polite"></div>
+
+<!-- ================= MASCOT HELPER BUBBLE ================= -->
+<div id="mascot-helper" class="mascot-helper" aria-hidden="true">
+  <img src="assets/images/mascot.svg" alt="" width="56" height="60">
+</div>
+
+<script src="script.js"></script>
+</body>
+</html>
