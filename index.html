@@ -1,22 +1,21 @@
 <!DOCTYPE html>
-
 <html lang="en">
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0">
-<title>Magic Learning Adventure</title>
+<title>Magic Learning Adventure — Learn, Play, Smile, and Grow Together</title>
 <meta name="description" content="A magical, accessible learning world for children with autism, ADHD, Down syndrome, dyslexia, speech delays and other learning differences.">
 <link rel="icon" type="image/svg+xml" href="assets/images/favicon.svg">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link href="https://fonts.googleapis.com/css2?family=Baloo+2:wght@500;600;700;800&family=Quicksand:wght@500;600;700&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="style.css">
+<link rel="stylesheet" href="dashboard.css">
 </head>
 <body data-theme="light" data-dyslexia="off">
 
 <a href="#main-content" class="skip-link">Skip to main content</a>
 
 <!-- ================= LOADING SCREEN ================= -->
-
 <div id="loading-screen" class="loading-screen" role="status" aria-live="polite">
   <div class="loading-mascot">
     <img src="assets/images/mascot.svg" alt="" width="140" height="150">
@@ -26,7 +25,6 @@
 </div>
 
 <!-- ================= BACKGROUND (persistent, decorative) ================= -->
-
 <div class="sky-background" aria-hidden="true">
   <div class="cloud cloud1">☁️</div>
   <div class="cloud cloud2">☁️</div>
@@ -40,19 +38,56 @@
 </div>
 
 <!-- ================= TOP TOOLBAR ================= -->
-
 <header class="app-toolbar" id="app-toolbar" aria-label="App controls">
-  <button class="tool-btn" id="btn-home" aria-label="Go home">🏠<span>Home</span></button>
+  <button class="tool-btn tool-btn-logo" id="btn-home" aria-label="Go home">
+    <span class="logo-mark" aria-hidden="true">🪄</span><span>Home</span>
+  </button>
+
   <div class="toolbar-stats" aria-label="Your progress">
+    <span class="stat-pill" id="stat-streak" title="Daily streak">🔥 <b id="streak-count">0</b></span>
     <span class="stat-pill" id="stat-stars" title="Stars earned">⭐ <b id="stars-count">0</b></span>
     <span class="stat-pill" id="stat-coins" title="Coins earned">🪙 <b id="coins-count">0</b></span>
-    <span class="stat-pill" id="stat-level" title="Current level">🏆 <b id="level-count">1</b></span>
+    <span class="stat-pill" id="stat-trophies" title="Trophies earned">🏅 <b id="trophies-count">0</b></span>
+    <span class="stat-pill stat-pill-level" id="stat-level" title="Current level">
+      🏆 <b id="level-count">1</b>
+      <span class="mini-xp-bar"><span class="mini-xp-fill" id="mini-xp-fill"></span></span>
+    </span>
   </div>
+
   <div class="toolbar-actions">
     <button class="tool-btn" id="btn-mute" aria-pressed="false" aria-label="Mute sounds">🔊</button>
     <button class="tool-btn" id="btn-contrast" aria-pressed="false" aria-label="Toggle high contrast mode">🌓</button>
     <button class="tool-btn" id="btn-dyslexia" aria-pressed="false" aria-label="Toggle dyslexia-friendly font">🔤</button>
     <button class="tool-btn" id="btn-fullscreen" aria-label="Toggle fullscreen">⛶</button>
+
+    <div class="dropdown-wrap">
+      <button class="tool-btn" id="btn-notifications" aria-haspopup="true" aria-expanded="false" aria-label="Notifications">🔔<span class="notif-dot" id="notif-dot" hidden></span></button>
+      <div class="dropdown-panel" id="panel-notifications" role="menu" hidden>
+        <h3>🔔 Notifications</h3>
+        <ul id="notif-list" class="dropdown-list"><li class="dropdown-empty">No notifications yet — go earn a badge! ✨</li></ul>
+      </div>
+    </div>
+
+    <div class="dropdown-wrap">
+      <button class="tool-btn" id="btn-settings" aria-haspopup="true" aria-expanded="false" aria-label="More settings">⚙️</button>
+      <div class="dropdown-panel" id="panel-settings" role="menu" hidden>
+        <h3>⚙️ More Options</h3>
+        <button class="dropdown-row" id="btn-voice" aria-pressed="false">🔊 Voice Guidance <span id="voice-state">Off</span></button>
+        <button class="dropdown-row" id="btn-large-text" aria-pressed="false">🔠 Large Text <span id="largetext-state">Off</span></button>
+        <button class="dropdown-row" id="btn-colorblind" aria-pressed="false">🌈 Color-Blind Mode <span id="colorblind-state">Off</span></button>
+        <label class="dropdown-row" for="lang-select">🌐 Language
+          <select id="lang-select" aria-label="Choose language">
+            <option value="en">English</option>
+            <option value="es">Español</option>
+            <option value="fr">Français</option>
+            <option value="ar">العربية</option>
+          </select>
+        </label>
+        <button class="dropdown-row" id="btn-help-shortcut">❓ Help Center</button>
+        <button class="dropdown-row" id="btn-parent-shortcut">👨‍👩‍👧 Parent Zone</button>
+      </div>
+    </div>
+
     <button class="tool-btn" id="btn-profile" aria-label="Open profile"><span id="toolbar-avatar">🐻</span></button>
   </div>
 </header>
@@ -60,11 +95,9 @@
 <main id="main-content">
 
 <!-- ================= LANDING PAGE ================= -->
-
 <section id="screen-landing" class="screen active" aria-label="Welcome page">
 
   <!-- HERO -->
-
   <div class="hero">
     <div class="rainbow-arc" aria-hidden="true"></div>
     <div class="balloon b1" aria-hidden="true">🎈</div>
@@ -80,7 +113,6 @@
   </div>
 
   <!-- STATS -->
-
   <section class="stats-section" aria-label="Statistics">
     <div class="stat-card"><span class="stat-num">12</span><span class="stat-label">Magic Activities</span></div>
     <div class="stat-card"><span class="stat-num">100%</span><span class="stat-label">Offline &amp; Free</span></div>
@@ -89,7 +121,6 @@
   </section>
 
   <!-- FEATURES -->
-
   <section class="features-section" aria-labelledby="features-heading">
     <h2 id="features-heading">A World Built for Every Kind of Learner</h2>
     <div class="features-grid">
@@ -103,7 +134,6 @@
   </section>
 
   <!-- PARENTS -->
-
   <section class="info-section" aria-labelledby="parents-heading">
     <div class="info-media" aria-hidden="true">👪</div>
     <div class="info-text">
@@ -118,7 +148,6 @@
   </section>
 
   <!-- TEACHERS -->
-
   <section class="info-section reverse" aria-labelledby="teachers-heading">
     <div class="info-media" aria-hidden="true">🍎</div>
     <div class="info-text">
@@ -133,7 +162,6 @@
   </section>
 
   <!-- TESTIMONIALS -->
-
   <section class="testimonials-section" aria-labelledby="testimonials-heading">
     <h2 id="testimonials-heading">Happy Grown-Ups</h2>
     <div class="testimonials-grid">
@@ -144,7 +172,6 @@
   </section>
 
   <!-- ACCESSIBILITY HIGHLIGHTS -->
-
   <section class="accessibility-section" aria-labelledby="a11y-heading">
     <h2 id="a11y-heading">Designed With Accessibility at Heart</h2>
     <div class="a11y-grid">
@@ -159,27 +186,65 @@
     </div>
   </section>
 
-  <footer class="site-footer">
-    <img src="assets/images/favicon.svg" alt="" width="36" height="36">
-    <p>Magic Learning Adventure — made with 💛 for every kind of learner.</p>
-    <p class="footer-fine">No accounts. No ads. No internet required. Your progress lives only in this browser.</p>
-  </footer>
+  <div id="landing-footer"><!-- injected by renderFooter() --></div>
 </section>
 
 <!-- ================= DASHBOARD ================= -->
-
 <section id="screen-dashboard" class="screen" aria-label="Activity dashboard">
+
+  <!-- decorative magical-world layers, populated by JS, purely visual -->
+  <div class="dash-world" id="dash-world" aria-hidden="true">
+    <div class="world-layer world-sky"></div>
+    <div class="world-layer world-far"></div>
+    <div class="world-rainbow"></div>
+    <div class="world-layer world-hills-back"></div>
+    <div class="world-castle">🏰</div>
+    <div class="world-layer world-hills-front"></div>
+    <div class="world-river"></div>
+    <div class="world-bridge">🌉</div>
+    <div class="world-decor" id="world-decor"></div>
+  </div>
+
   <div class="dashboard-header">
     <h1>Welcome back, <span id="dashboard-name">Explorer</span>! <span aria-hidden="true">🌈</span></h1>
-    <p>Pick an adventure to begin.</p>
+    <p>Pick an adventure to begin — every corner of the kingdom has something new!</p>
   </div>
-  <div class="dashboard-grid" id="dashboard-grid" role="list">
-    <!-- cards injected by JS -->
-  </div>
+
+  <!-- Today's widgets -->
+  <section class="dash-section" aria-labelledby="widgets-heading">
+    <div class="dash-section-title"><h2 id="widgets-heading">✨ Today in Your Kingdom</h2><div class="dash-divider"></div></div>
+    <div class="widgets-grid" id="widgets-grid"><!-- injected --></div>
+  </section>
+
+  <!-- Main symmetric activity grid (4 columns x 3 rows on desktop) -->
+  <section class="dash-section" aria-labelledby="grid-heading">
+    <div class="dash-section-title"><h2 id="grid-heading">🌈 Choose Your Adventure</h2><div class="dash-divider"></div></div>
+    <p class="dash-section-sub">12 magical activities, perfectly arranged just for you.</p>
+    <div class="dashboard-grid" id="dashboard-grid" role="list"><!-- injected --></div>
+  </section>
+
+  <!-- Story Library -->
+  <section class="dash-section" aria-labelledby="story-heading">
+    <div class="dash-section-title"><h2 id="story-heading">📚 Story Library</h2><div class="dash-divider"></div></div>
+    <div class="story-grid" id="story-grid"><!-- injected --></div>
+  </section>
+
+  <!-- Parent Zone & Help Center -->
+  <section class="dash-section" id="parent-zone-section" aria-labelledby="parent-heading">
+    <div class="dash-section-title"><h2 id="parent-heading">👨‍👩‍👧 Parent Zone</h2><div class="dash-divider"></div></div>
+    <div class="widgets-grid" id="parent-zone-grid"><!-- injected --></div>
+  </section>
+
+  <section class="dash-section" id="help-center-section" aria-labelledby="help-heading">
+    <div class="dash-section-title"><h2 id="help-heading">❓ Help Center</h2><div class="dash-divider"></div></div>
+    <div id="help-accordion" class="help-accordion"><!-- injected --></div>
+  </section>
+
+  <!-- Rich dashboard footer -->
+  <div id="dashboard-footer"><!-- injected --></div>
 </section>
 
 <!-- ================= ACTIVITY SCREEN (generic container) ================= -->
-
 <section id="screen-activity" class="screen" aria-label="Activity">
   <div class="activity-header">
     <button class="btn-back" id="btn-activity-back" aria-label="Back to dashboard">⬅ Back</button>
@@ -192,7 +257,6 @@
 </section>
 
 <!-- ================= PROFILE SCREEN ================= -->
-
 <section id="screen-profile" class="screen" aria-label="Your profile">
   <div class="activity-header">
     <button class="btn-back" id="btn-profile-back" aria-label="Back to dashboard">⬅ Back</button>
@@ -202,48 +266,42 @@
 
   <div class="profile-content">
     <div class="profile-card">
-      <div class="avatar-display" id="avatar-display">🐻</div>
+      <div class="avatar-stage" id="avatar-stage" aria-label="Your avatar preview"></div>
       <label class="field-label" for="profile-name-input">My Name</label>
       <input id="profile-name-input" class="profile-name-input" type="text" maxlength="20" value="Explorer" aria-label="Edit your name">
 
-  <p class="field-label">Choose an Avatar</p>
-  <div class="avatar-grid" id="avatar-grid" role="list">
-    <!-- avatars injected by JS -->
-  </div>
-</div>
+      <p class="field-label">Build Your Avatar</p>
+      <div class="avatar-tabs" id="avatar-tabs" role="tablist" aria-label="Avatar customization categories"></div>
+      <div class="avatar-options" id="avatar-options" role="list"></div>
+    </div>
 
-<div class="profile-stats-card">
-  <h2>My Progress</h2>
-  <div class="progress-row"><span>Level</span><strong id="profile-level">1</strong></div>
-  <div class="xp-bar"><div class="xp-bar-fill" id="profile-xp-fill"></div></div>
-  <div class="progress-grid">
-    <div class="progress-mini"><span>⭐</span><strong id="profile-stars">0</strong><small>Stars</small></div>
-    <div class="progress-mini"><span>🪙</span><strong id="profile-coins">0</strong><small>Coins</small></div>
-    <div class="progress-mini"><span>🎖️</span><strong id="profile-badges">0</strong><small>Badges</small></div>
-    <div class="progress-mini"><span>🏅</span><strong id="profile-trophies">0</strong><small>Trophies</small></div>
-  </div>
-</div>
-
+    <div class="profile-stats-card">
+      <h2>My Progress</h2>
+      <div class="progress-row"><span>Level</span><strong id="profile-level">1</strong></div>
+      <div class="xp-bar"><div class="xp-bar-fill" id="profile-xp-fill"></div></div>
+      <div class="progress-grid">
+        <div class="progress-mini"><span>⭐</span><strong id="profile-stars">0</strong><small>Stars</small></div>
+        <div class="progress-mini"><span>🪙</span><strong id="profile-coins">0</strong><small>Coins</small></div>
+        <div class="progress-mini"><span>🎖️</span><strong id="profile-badges">0</strong><small>Badges</small></div>
+        <div class="progress-mini"><span>🏅</span><strong id="profile-trophies">0</strong><small>Trophies</small></div>
+      </div>
+    </div>
   </div>
 </section>
 
 </main>
 
 <!-- ================= CONFETTI CANVAS ================= -->
-
 <canvas id="confetti-canvas" aria-hidden="true"></canvas>
 
 <!-- ================= TOAST / ENCOURAGEMENT ================= -->
-
 <div id="toast" class="toast" role="status" aria-live="polite"></div>
 
 <!-- ================= MASCOT HELPER BUBBLE ================= -->
-
 <div id="mascot-helper" class="mascot-helper" aria-hidden="true">
   <img src="assets/images/mascot.svg" alt="" width="56" height="60">
 </div>
 
 <script src="script.js"></script>
-
 </body>
 </html>
