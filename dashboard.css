@@ -42,7 +42,6 @@
   position:absolute; top:40px; left:50%; transform: translateX(-50%); width:700px; height:350px; max-width:90vw;
   border-radius:50%; border:22px solid transparent;
   background: conic-gradient(from 180deg at 50% 100%, #FF9AA2, #FFD66B, #B6ECD2, #AEE1F9, #C9B6E4, #FF9AA2) border-box;
-  -webkit-mask: linear-gradient(#fff 0 0) padding-box, linear-gradient(#fff 0 0);
   mask: linear-gradient(#fff 0 0) padding-box, linear-gradient(#fff 0 0);
   -webkit-mask-composite: xor; mask-composite: exclude; opacity:.5; animation: rainbowGlow 7s ease-in-out infinite;
 }
@@ -110,19 +109,18 @@
 /* ---------- 5) RAILS & PREMIUM ACTIVITY CARDS ---------- */
 .rail-grid{ display:flex; flex-wrap:wrap; justify-content:center; gap:24px; }
 
-/* Perfectly symmetric activity grid — fixed column counts so every row
-   lines up cleanly (4x3 desktop / 3x4 tablet / 2x6 mobile / 1x12 small).
-   12 activities divide evenly into every one of these column counts. */
-.dashboard-grid{
+/* Perfectly symmetric zone grids — 9 activities each divide evenly into a
+   clean 3x3 square on desktop, and a single column on small screens.
+   Every row always has the same number of cards: no ragged edges, ever. */
+.dashboard-grid.zone-grid{
   display:grid;
-  grid-template-columns: repeat(4, minmax(0,1fr));
+  grid-template-columns: repeat(3, minmax(0,1fr));
   gap:28px;
-  max-width:1200px; margin:0 auto; padding:0;
+  max-width:1100px; margin:0 auto; padding:0;
   perspective: 1400px;
 }
-@media (max-width:1080px){ .dashboard-grid{ grid-template-columns: repeat(2, minmax(0,1fr)); } }
-@media (max-width:760px){ .dashboard-grid{ grid-template-columns: repeat(2, minmax(0,1fr)); gap:18px; } }
-@media (max-width:480px){ .dashboard-grid{ grid-template-columns: 1fr; } }
+@media (max-width:900px){ .dashboard-grid.zone-grid{ grid-template-columns: repeat(3, minmax(0,1fr)); gap:18px; } }
+@media (max-width:640px){ .dashboard-grid.zone-grid{ grid-template-columns: 1fr; } }
 
 .game-card{
   position:relative; min-height: 360px; border-radius: 26px; padding:22px 20px 20px;
@@ -145,7 +143,6 @@
 .game-card::before{
   content:''; position:absolute; inset:0; border-radius:26px; padding:2px;
   background: linear-gradient(135deg,#FFD66B,#FF9FB2,#AEE1F9,#C9B6E4);
-  -webkit-mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
   mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
   -webkit-mask-composite: xor; mask-composite: exclude; opacity:.55; pointer-events:none;
 }
@@ -292,7 +289,7 @@
   border-radius: 50px 50px 0 0; }
 .rich-footer .footer-rainbow{ width:400px; height:200px; margin:0 auto; border-radius:50%; border:16px solid transparent;
   background: conic-gradient(from 180deg at 50% 100%, #FF9AA2, #FFD66B, #B6ECD2, #AEE1F9, #C9B6E4, #FF9AA2) border-box;
-  -webkit-mask: linear-gradient(#fff 0 0) padding-box, linear-gradient(#fff 0 0); mask: linear-gradient(#fff 0 0) padding-box, linear-gradient(#fff 0 0); -webkit-mask-composite: xor; mask-composite: exclude;
+  -webkit-mask: linear-gradient(#fff 0 0) padding-box, linear-gradient(#fff 0 0); -webkit-mask-composite: xor; mask-composite: exclude;
   opacity:.6; position:absolute; top:-40px; left:50%; transform:translateX(-50%); }
 .footer-mascot{ width:110px; margin: 10px auto; animation: floatY 3.6s ease-in-out infinite; position:relative; z-index:1; }
 .footer-decor{ position:absolute; inset:0; pointer-events:none; }
@@ -303,6 +300,18 @@
 .footer-col p, .footer-col a{ display:block; color: var(--ink-soft); text-decoration:none; font-weight:700; font-size:.9rem; margin-bottom:4px; }
 .footer-col a:hover{ text-decoration:underline; }
 .footer-bottom{ position:relative; z-index:1; margin-top:20px; color: var(--ink-soft); font-size:.85rem; }
+
+/* ---------- BALLOON POP / REFLEX MINI-GAME ---------- */
+.whack-grid{ display:grid; grid-template-columns: repeat(3, 100px); gap:14px; justify-content:center; margin:20px auto; }
+.whack-hole{
+  width:100px; height:100px; border-radius:50%; border:none; font-size:2.4rem;
+  background: radial-gradient(circle at 30% 30%, #EDE3FF, #C9B6E4);
+  box-shadow: inset 0 6px 10px rgba(0,0,0,.15), var(--shadow-soft);
+  display:flex; align-items:center; justify-content:center; transition: transform .12s ease, background .12s ease;
+}
+.whack-hole.active{ background: radial-gradient(circle at 30% 30%, #FFF6C8, #FFD66B); animation: popIn .25s ease; }
+.whack-hole.hit{ animation: popIn .3s ease; transform: scale(1.1); }
+@media (max-width:480px){ .whack-grid{ grid-template-columns: repeat(3, 84px); } .whack-hole{ width:84px; height:84px; font-size:2rem; } }
 
 /* ---------- 8) RESPONSIVE ---------- */
 @media (max-width: 900px){

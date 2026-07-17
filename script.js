@@ -176,9 +176,9 @@ function speak(text){
 
 /* ---------- 3) CONFETTI / PARTICLE CELEBRATIONS ---------- */
 const confettiCanvas = document.getElementById('confetti-canvas');
-const cctx = confettiCanvas.getContext('2d');
+const cctx = confettiCanvas ? confettiCanvas.getContext('2d') : null;
 let particles = [];
-function resizeConfetti(){ confettiCanvas.width = window.innerWidth; confettiCanvas.height = window.innerHeight; }
+function resizeConfetti(){ if(!confettiCanvas || !cctx) return; confettiCanvas.width = window.innerWidth; confettiCanvas.height = window.innerHeight; }
 window.addEventListener('resize', resizeConfetti); resizeConfetti();
 
 const CONFETTI_COLORS = ['#FF9FB2','#FFD66B','#B6ECD2','#AEE1F9','#C9B6E4','#FFB5A7'];
@@ -206,6 +206,7 @@ function celebrationConfetti(){
 
 let confettiRAF = null;
 function confettiLoop(){
+  if(!confettiCanvas || !cctx) return;
   cctx.clearRect(0,0,confettiCanvas.width, confettiCanvas.height);
   particles.forEach(p=>{
     p.vy += p.g*0.15; p.x += p.vx; p.y += p.vy; p.rot += p.vr; p.life--;
@@ -224,6 +225,7 @@ function confettiLoop(){
 const toastEl = document.getElementById('toast');
 let toastTimer = null;
 function showToast(message){
+  if(!toastEl) return;
   toastEl.textContent = message; toastEl.classList.add('show');
   clearTimeout(toastTimer);
   toastTimer = setTimeout(()=> toastEl.classList.remove('show'), 2600);
@@ -306,52 +308,69 @@ function toggleDropdown(panelId, btnId){
 }
 
 function initToolbar(){
-  document.getElementById('btn-home').addEventListener('click', ()=>{ AudioEngine.click(); showScreen('screen-landing'); });
-  document.getElementById('btn-profile').addEventListener('click', ()=>{ AudioEngine.click(); openProfile(); });
+  const btnHome = document.getElementById('btn-home');
+  const btnProfile = document.getElementById('btn-profile');
+  const btnMute = document.getElementById('btn-mute');
+  const btnContrast = document.getElementById('btn-contrast');
+  const btnDyslexia = document.getElementById('btn-dyslexia');
+  const btnFullscreen = document.getElementById('btn-fullscreen');
+  const btnVoice = document.getElementById('btn-voice');
+  const btnLargeText = document.getElementById('btn-large-text');
+  const btnColorblind = document.getElementById('btn-colorblind');
+  const langSelect = document.getElementById('lang-select');
+  const btnHelpShortcut = document.getElementById('btn-help-shortcut');
+  const btnParentShortcut = document.getElementById('btn-parent-shortcut');
+  const btnSettings = document.getElementById('btn-settings');
+  const btnNotifications = document.getElementById('btn-notifications');
 
-  document.getElementById('btn-mute').addEventListener('click', ()=>{
+  btnHome?.addEventListener('click', ()=>{ AudioEngine.click(); showScreen('screen-landing'); });
+  btnProfile?.addEventListener('click', ()=>{ AudioEngine.click(); openProfile(); });
+
+  btnMute?.addEventListener('click', ()=>{
     state.settings.muted = !state.settings.muted;
     if(state.settings.muted) { AudioEngine.stopAmbient(); AudioEngine.stopNature(); }
     saveState(); applySettingsToDOM();
   });
-  document.getElementById('btn-contrast').addEventListener('click', ()=>{
+  btnContrast?.addEventListener('click', ()=>{
     state.settings.theme = state.settings.theme === 'contrast' ? 'light' : 'contrast';
     saveState(); applySettingsToDOM();
   });
-  document.getElementById('btn-dyslexia').addEventListener('click', ()=>{
+  btnDyslexia?.addEventListener('click', ()=>{
     state.settings.dyslexia = !state.settings.dyslexia; saveState(); applySettingsToDOM();
   });
-  document.getElementById('btn-fullscreen').addEventListener('click', ()=>{
+  btnFullscreen?.addEventListener('click', ()=>{
     if(!document.fullscreenElement) document.documentElement.requestFullscreen?.().catch(()=>{});
     else document.exitFullscreen?.();
   });
-  document.getElementById('btn-voice').addEventListener('click', ()=>{
+  btnVoice?.addEventListener('click', ()=>{
     state.settings.voice = !state.settings.voice; saveState(); applySettingsToDOM();
     if(state.settings.voice) speak('Voice guidance is on. I will read helpful instructions out loud.');
   });
-  document.getElementById('btn-large-text').addEventListener('click', ()=>{
+  btnLargeText?.addEventListener('click', ()=>{
     state.settings.largeText = !state.settings.largeText; saveState(); applySettingsToDOM();
   });
-  document.getElementById('btn-colorblind').addEventListener('click', ()=>{
+  btnColorblind?.addEventListener('click', ()=>{
     state.settings.colorBlind = !state.settings.colorBlind; saveState(); applySettingsToDOM();
   });
-  document.getElementById('lang-select').addEventListener('change', e=>{
+  langSelect?.addEventListener('change', e=>{
     state.settings.lang = e.target.value; saveState();
     showToast('🌐 More full translations are coming soon — English content shown for now!');
   });
-  document.getElementById('btn-help-shortcut').addEventListener('click', ()=>{
-    document.getElementById('panel-settings').hidden = true;
+  btnHelpShortcut?.addEventListener('click', ()=>{
+    const panelSettings = document.getElementById('panel-settings');
+    panelSettings && (panelSettings.hidden = true);
     renderDashboard(); showScreen('screen-dashboard');
-    setTimeout(()=> document.getElementById('help-center-section').scrollIntoView({behavior:'smooth'}), 200);
+    setTimeout(()=> document.getElementById('help-center-section')?.scrollIntoView({behavior:'smooth'}), 200);
   });
-  document.getElementById('btn-parent-shortcut').addEventListener('click', ()=>{
-    document.getElementById('panel-settings').hidden = true;
+  btnParentShortcut?.addEventListener('click', ()=>{
+    const panelSettings = document.getElementById('panel-settings');
+    panelSettings && (panelSettings.hidden = true);
     renderDashboard(); showScreen('screen-dashboard');
-    setTimeout(()=> document.getElementById('parent-zone-section').scrollIntoView({behavior:'smooth'}), 200);
+    setTimeout(()=> document.getElementById('parent-zone-section')?.scrollIntoView({behavior:'smooth'}), 200);
   });
 
-  document.getElementById('btn-settings').addEventListener('click', ()=> toggleDropdown('panel-settings','btn-settings'));
-  document.getElementById('btn-notifications').addEventListener('click', ()=> toggleDropdown('panel-notifications','btn-notifications'));
+  btnSettings?.addEventListener('click', ()=> toggleDropdown('panel-settings','btn-settings'));
+  btnNotifications?.addEventListener('click', ()=> toggleDropdown('panel-notifications','btn-notifications'));
   document.addEventListener('click', e=>{
     if(!e.target.closest('.dropdown-wrap')){
       document.querySelectorAll('.dropdown-panel').forEach(p=> p.hidden = true);
@@ -499,33 +518,42 @@ function initAvatarBuilder(){
 
 /* ---------- 9) DASHBOARD ---------- */
 const ACTIVITIES = [
-  { id:'abc', title:'ABC Learning', emoji:'🔤', desc:'Match letters to their pictures.', difficulty:'Easy', time:'5 min', reward:3 },
-  { id:'numbers', title:'Numbers', emoji:'🔢', desc:'Count and tap the right number.', difficulty:'Easy', time:'5 min', reward:3 },
-  { id:'shapes', title:'Shapes', emoji:'🔺', desc:'Fit shapes into their outlines.', difficulty:'Easy', time:'5 min', reward:3 },
-  { id:'colors', title:'Colors', emoji:'🎨', desc:'Match color names to splashes.', difficulty:'Easy', time:'5 min', reward:3 },
-  { id:'memory', title:'Memory Game', emoji:'🧠', desc:'Flip cards and find the pairs.', difficulty:'Medium', time:'8 min', reward:4 },
-  { id:'puzzle', title:'Puzzle', emoji:'🧩', desc:'Build a happy little picture.', difficulty:'Medium', time:'6 min', reward:3 },
-  { id:'matching', title:'Matching Game', emoji:'🐣', desc:'Match baby animals to parents.', difficulty:'Medium', time:'6 min', reward:3 },
-  { id:'music', title:'Music Corner', emoji:'🎹', desc:'Play piano, drums &amp; xylophone.', difficulty:'Easy', time:'Free play', reward:2 },
-  { id:'drawing', title:'Drawing Pad', emoji:'🖍️', desc:'Draw with rainbow &amp; glitter brushes.', difficulty:'Easy', time:'Free play', reward:2 },
-  { id:'rewards', title:'Reward Room', emoji:'🎁', desc:'See your stickers and trophies.', difficulty:'—', time:'2 min', reward:0 },
-  { id:'calm', title:'Calm Corner', emoji:'🫧', desc:'Breathe, pop bubbles, relax.', difficulty:'—', time:'Free play', reward:1 },
-  { id:'achievements', title:'Achievements', emoji:'🏆', desc:'Track your magical milestones.', difficulty:'—', time:'2 min', reward:0 },
-  { id:'words', title:'Word Builder', emoji:'🧱', desc:'Build simple words letter by letter.', difficulty:'Medium', time:'6 min', reward:3 },
-  { id:'emotions', title:'Emotions Corner', emoji:'🥰', desc:'Match faces to how they feel.', difficulty:'Easy', time:'5 min', reward:3 },
-  { id:'opposites', title:'Opposites', emoji:'⚖️', desc:'Match every word to its opposite.', difficulty:'Medium', time:'5 min', reward:3 },
-  { id:'simon', title:'Simon Says', emoji:'🎯', desc:'Watch, remember, repeat the pattern.', difficulty:'Medium', time:'5 min', reward:4 }
+  // ---- 📚 Learning Zone (9 — perfect 3x3 grid) ----
+  { id:'abc', title:'ABC Learning', emoji:'🔤', desc:'Match letters to their pictures.', difficulty:'Easy', time:'5 min', reward:3, category:'learning' },
+  { id:'numbers', title:'Numbers', emoji:'🔢', desc:'Count and tap the right number.', difficulty:'Easy', time:'5 min', reward:3, category:'learning' },
+  { id:'shapes', title:'Shapes', emoji:'🔺', desc:'Fit shapes into their outlines.', difficulty:'Easy', time:'5 min', reward:3, category:'learning' },
+  { id:'colors', title:'Colors', emoji:'🎨', desc:'Match color names to splashes.', difficulty:'Easy', time:'5 min', reward:3, category:'learning' },
+  { id:'words', title:'Word Builder', emoji:'🧱', desc:'Build simple words letter by letter.', difficulty:'Medium', time:'6 min', reward:3, category:'learning' },
+  { id:'emotions', title:'Emotions Corner', emoji:'🥰', desc:'Match faces to how they feel.', difficulty:'Easy', time:'5 min', reward:3, category:'learning' },
+  { id:'opposites', title:'Opposites', emoji:'⚖️', desc:'Match every word to its opposite.', difficulty:'Medium', time:'5 min', reward:3, category:'learning' },
+  { id:'matching', title:'Matching Game', emoji:'🐣', desc:'Match baby animals to parents.', difficulty:'Medium', time:'6 min', reward:3, category:'learning' },
+  { id:'rhyme', title:'Rhyme Time', emoji:'🎵', desc:'Match every word to its rhyme.', difficulty:'Medium', time:'5 min', reward:3, category:'learning' },
+
+  // ---- 🎮 Games Zone (9 — perfect 3x3 grid) ----
+  { id:'memory', title:'Memory Game', emoji:'🧠', desc:'Flip cards and find the pairs.', difficulty:'Medium', time:'8 min', reward:4, category:'games' },
+  { id:'puzzle', title:'Puzzle', emoji:'🧩', desc:'Build a happy little picture.', difficulty:'Medium', time:'6 min', reward:3, category:'games' },
+  { id:'music', title:'Music Corner', emoji:'🎹', desc:'Play piano, drums &amp; xylophone.', difficulty:'Easy', time:'Free play', reward:2, category:'games' },
+  { id:'drawing', title:'Drawing Pad', emoji:'🖍️', desc:'Draw with rainbow &amp; glitter brushes.', difficulty:'Easy', time:'Free play', reward:2, category:'games' },
+  { id:'simon', title:'Simon Says', emoji:'🎯', desc:'Watch, remember, repeat the pattern.', difficulty:'Medium', time:'5 min', reward:4, category:'games' },
+  { id:'calm', title:'Calm Corner', emoji:'🫧', desc:'Breathe, pop bubbles, relax.', difficulty:'—', time:'Free play', reward:1, category:'games' },
+  { id:'rewards', title:'Reward Room', emoji:'🎁', desc:'See your stickers and trophies.', difficulty:'—', time:'2 min', reward:0, category:'games' },
+  { id:'achievements', title:'Achievements', emoji:'🏆', desc:'Track your magical milestones.', difficulty:'—', time:'2 min', reward:0, category:'games' },
+  { id:'balloon', title:'Balloon Pop', emoji:'🎈', desc:'Pop balloons the moment they appear!', difficulty:'Easy', time:'2 min', reward:3, category:'games' }
 ];
 const ACTIVITY_TARGET = 5; // completions considered "mastered" for the progress bar
-const ALWAYS_UNLOCKED = ['abc', 'rewards', 'achievements']; // first activity + info-only rooms
+
+// Screens with no "win" state (always open) vs. the first game of each zone
+// (always open, but still counts as real progress for the *next* item's lock check).
+const INFO_ONLY = ['rewards', 'achievements'];
+const SECTION_STARTERS = ['abc', 'memory'];
 
 function isUnlocked(activityId){
-  if(ALWAYS_UNLOCKED.includes(activityId)) return true;
+  if(INFO_ONLY.includes(activityId) || SECTION_STARTERS.includes(activityId)) return true;
   const idx = ACTIVITIES.findIndex(a=>a.id===activityId);
   // walk backwards to the nearest *real* activity, skipping info-only rooms
   for(let i = idx - 1; i >= 0; i--){
     const prevId = ACTIVITIES[i].id;
-    if(ALWAYS_UNLOCKED.includes(prevId)) continue;
+    if(INFO_ONLY.includes(prevId)) continue;
     return (state.activityCompletions[prevId] || 0) >= 1;
   }
   return true;
@@ -573,9 +601,13 @@ function createGameCard(activity){
 
 function renderDashboard(){
   document.getElementById('dashboard-name').textContent = state.profile.name || 'Explorer';
-  const grid = document.getElementById('dashboard-grid');
-  grid.innerHTML = '';
-  ACTIVITIES.forEach(a=> grid.appendChild(createGameCard(a)));
+  const learningGrid = document.getElementById('learning-grid');
+  const gamesGrid = document.getElementById('games-grid');
+  learningGrid.innerHTML = ''; gamesGrid.innerHTML = '';
+  ACTIVITIES.forEach(a=>{
+    const target = a.category === 'games' ? gamesGrid : learningGrid;
+    target.appendChild(createGameCard(a));
+  });
 
   renderWorldDecorations();
   renderWidgets();
@@ -622,7 +654,7 @@ function renderWidgets(){
 
   const widgets = [
     { icon:'📅', title:"Today's Challenge", body: challengeText(), action:'Go!', onAction:()=> openBestNextActivity() },
-    { icon:'🌟', title:"Today's Goal", body: 'Finish 1 activity today.', action:"Let's go", onAction:()=> document.getElementById('dashboard-grid').scrollIntoView({behavior:'smooth'}) },
+    { icon:'🌟', title:"Today's Goal", body: 'Finish 1 activity today.', action:"Let's go", onAction:()=> document.getElementById('learning-grid').scrollIntoView({behavior:'smooth'}) },
     { icon:'🏅', title:'Weekly Progress', body: `${state.stars} stars earned so far — keep glowing!`, action:null },
     { icon:'🎁', title:'Surprise Gift', body: state.giftLog[todayKey] ? "You already opened today's gift!" : 'A gift is waiting for you!', action: state.giftLog[todayKey] ? 'Opened ✔' : 'Open', onAction: openSurpriseGift, disabled: !!state.giftLog[todayKey] },
     { icon:'📖', title:'Story of the Day', body: STORIES[dayIdx % STORIES.length].title, action:'Read', onAction:()=> document.getElementById('story-heading').scrollIntoView({behavior:'smooth'}) },
@@ -1016,7 +1048,8 @@ const GAME_RENDERERS = {
   abc: renderABC, numbers: renderNumbers, shapes: renderShapes, colors: renderColors,
   memory: renderMemory, puzzle: renderPuzzle, matching: renderMatching, music: renderMusic,
   drawing: renderDrawing, rewards: renderRewards, calm: renderCalm, achievements: renderAchievements,
-  words: renderWordBuilder, emotions: renderEmotions, opposites: renderOpposites, simon: renderSimon
+  words: renderWordBuilder, emotions: renderEmotions, opposites: renderOpposites, simon: renderSimon,
+  rhyme: renderRhyme, balloon: renderBalloonPop
 };
 
 function renderABC(mount){
@@ -1663,6 +1696,86 @@ function renderSimon(mount){
   startBtn.addEventListener('click', startGame);
 }
 
+/* ---------- Rhyme Time (match every word to its rhyme) ---------- */
+function renderRhyme(mount){
+  const pairs = [
+    {id:'cat', word:'Cat', rhyme:'Hat'}, {id:'dog', word:'Dog', rhyme:'Frog'},
+    {id:'star', word:'Star', rhyme:'Car'}, {id:'bee', word:'Bee', rhyme:'Tree'},
+    {id:'moon', word:'Moon', rhyme:'Spoon'}
+  ];
+  createPlacementGame({
+    mountEl: mount,
+    poolItems: pairs.map(p=>({id:p.id, emoji:'🎵', label:p.word})),
+    slots: pairs.map(p=>({id:p.id, matchId:p.id, label:p.rhyme})),
+    activityId:'rhyme', badgeId:'badge_rhyme',
+    instructions:'Drag each word to the word that rhymes with it — words that sound alike at the end!'
+  });
+}
+
+/* ---------- Balloon Pop (fast, joyful reflex game) ---------- */
+function renderBalloonPop(mount){
+  mount.innerHTML = '';
+  let start; // forward reference for restart button
+  renderGameChrome(mount, { instructions:'Balloons will appear in the grid — tap them quickly before they float away!', onRestart: ()=> start() });
+  const shell = document.createElement('div'); shell.className = 'game-shell'; shell.style.textAlign = 'center';
+  shell.innerHTML = `
+    <p class="game-progress" id="balloon-progress">Score: 0</p>
+    <div class="whack-grid" id="balloon-grid"></div>`;
+  mount.appendChild(shell);
+
+  const HOLES = 9;
+  const gridEl = shell.querySelector('#balloon-grid');
+  const progressEl = shell.querySelector('#balloon-progress');
+  const holes = [];
+  for(let i=0;i<HOLES;i++){
+    const hole = document.createElement('button');
+    hole.className = 'whack-hole'; hole.setAttribute('aria-label', `Balloon spot ${i+1}`);
+    hole.addEventListener('click', ()=> handleHit(i));
+    gridEl.appendChild(hole); holes.push(hole);
+  }
+
+  let score = 0, rounds = 0, timer = null, activeIndex = -1, playing = false;
+  const TOTAL_ROUNDS = 15;
+
+  start = function(){
+    score = 0; rounds = 0; playing = true;
+    progressEl.textContent = 'Score: 0';
+    holes.forEach(h=>{ h.classList.remove('active','hit'); h.textContent = ''; });
+    popNext();
+  };
+  function popNext(){
+    if(!playing) return;
+    if(rounds >= TOTAL_ROUNDS){ finish(); return; }
+    rounds++;
+    if(activeIndex >= 0){ holes[activeIndex].classList.remove('active'); holes[activeIndex].textContent = ''; }
+    activeIndex = Math.floor(Math.random()*HOLES);
+    holes[activeIndex].classList.add('active');
+    holes[activeIndex].textContent = '🎈';
+    timer = setTimeout(()=>{
+      holes[activeIndex].classList.remove('active'); holes[activeIndex].textContent = '';
+      popNext();
+    }, 950);
+  }
+  function handleHit(i){
+    if(!playing || i !== activeIndex) return;
+    clearTimeout(timer);
+    holes[i].classList.remove('active'); holes[i].textContent = ''; holes[i].classList.add('hit');
+    setTimeout(()=> holes[i].classList.remove('hit'), 300);
+    score++;
+    progressEl.textContent = `Score: ${score}`;
+    AudioEngine.pop(); fireStarBurst(holes[i].getBoundingClientRect().left, holes[i].getBoundingClientRect().top);
+    popNext();
+  }
+  function finish(){
+    playing = false;
+    AudioEngine.victory(); celebrationConfetti();
+    grantReward({ stars:3, coins:2, activityId:'balloon', badgeId:'badge_balloon' });
+    shell.innerHTML = `<h2>🎉 Amazing Reflexes!</h2><p>You popped ${score} balloons! Great job!</p>`;
+  }
+  observeUnmount(mount, ()=>{ playing = false; clearTimeout(timer); });
+  start();
+}
+
 /* ---------- 13) REWARDS / ACHIEVEMENTS ---------- */
 const BADGES = [
   {id:'badge_abc', name:'Alphabet Star', emoji:'🔤'}, {id:'badge_numbers', name:'Number Whiz', emoji:'🔢'},
@@ -1671,7 +1784,8 @@ const BADGES = [
   {id:'badge_matching', name:'Animal Friend', emoji:'🐣'}, {id:'badge_artist', name:'Little Artist', emoji:'🖍️'},
   {id:'badge_music', name:'Music Maker', emoji:'🎹'}, {id:'badge_calm', name:'Calm Champion', emoji:'🫧'},
   {id:'badge_words', name:'Word Builder', emoji:'🧱'}, {id:'badge_emotions', name:'Feelings Friend', emoji:'🥰'},
-  {id:'badge_opposites', name:'Opposite Ace', emoji:'⚖️'}, {id:'badge_simon', name:'Pattern Pro', emoji:'🎯'}
+  {id:'badge_opposites', name:'Opposite Ace', emoji:'⚖️'}, {id:'badge_simon', name:'Pattern Pro', emoji:'🎯'},
+  {id:'badge_rhyme', name:'Rhyme Time Champ', emoji:'🎵'}, {id:'badge_balloon', name:'Balloon Popper', emoji:'🎈'}
 ];
 const ACHIEVEMENTS = [
   {id:'ach_first_star', name:'First Star', emoji:'⭐', desc:'Earn your first star', target:1, progress:s=>s.stars, check:s=>s.stars>=1},

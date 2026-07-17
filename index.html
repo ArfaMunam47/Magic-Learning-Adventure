@@ -10,6 +10,7 @@
 <link href="https://fonts.googleapis.com/css2?family=Baloo+2:wght@500;600;700;800&family=Quicksand:wght@500;600;700&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="style.css">
 <link rel="stylesheet" href="dashboard.css">
+<link rel="stylesheet" href="premium.css">
 </head>
 <body data-theme="light" data-dyslexia="off">
 
@@ -216,11 +217,18 @@
     <div class="widgets-grid" id="widgets-grid"><!-- injected --></div>
   </section>
 
-  <!-- Main symmetric activity grid (4 columns x 3 rows on desktop) -->
-  <section class="dash-section" aria-labelledby="grid-heading">
-    <div class="dash-section-title"><h2 id="grid-heading">🌈 Choose Your Adventure</h2><div class="dash-divider"></div></div>
-    <p class="dash-section-sub">12 magical activities, perfectly arranged just for you.</p>
-    <div class="dashboard-grid" id="dashboard-grid" role="list"><!-- injected --></div>
+  <!-- Learning Zone — perfect 3x3 symmetric grid -->
+  <section class="dash-section" aria-labelledby="learning-heading">
+    <div class="dash-section-title"><h2 id="learning-heading">📚 Learning Zone</h2><div class="dash-divider"></div></div>
+    <p class="dash-section-sub">Letters, numbers, shapes, words and feelings — the building blocks!</p>
+    <div class="dashboard-grid zone-grid" id="learning-grid" role="list"><!-- injected --></div>
+  </section>
+
+  <!-- Games Zone — perfect 3x3 symmetric grid -->
+  <section class="dash-section" aria-labelledby="games-heading">
+    <div class="dash-section-title"><h2 id="games-heading">🎮 Games Zone</h2><div class="dash-divider"></div></div>
+    <p class="dash-section-sub">Play, create and unwind with these fun mini-games!</p>
+    <div class="dashboard-grid zone-grid" id="games-grid" role="list"><!-- injected --></div>
   </section>
 
   <!-- Story Library -->
