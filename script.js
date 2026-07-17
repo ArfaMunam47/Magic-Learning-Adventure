@@ -176,9 +176,9 @@ function speak(text){
 
 /* ---------- 3) CONFETTI / PARTICLE CELEBRATIONS ---------- */
 const confettiCanvas = document.getElementById('confetti-canvas');
-const cctx = confettiCanvas ? confettiCanvas.getContext('2d') : null;
+const cctx = confettiCanvas.getContext('2d');
 let particles = [];
-function resizeConfetti(){ if(!confettiCanvas || !cctx) return; confettiCanvas.width = window.innerWidth; confettiCanvas.height = window.innerHeight; }
+function resizeConfetti(){ confettiCanvas.width = window.innerWidth; confettiCanvas.height = window.innerHeight; }
 window.addEventListener('resize', resizeConfetti); resizeConfetti();
 
 const CONFETTI_COLORS = ['#FF9FB2','#FFD66B','#B6ECD2','#AEE1F9','#C9B6E4','#FFB5A7'];
@@ -206,7 +206,6 @@ function celebrationConfetti(){
 
 let confettiRAF = null;
 function confettiLoop(){
-  if(!confettiCanvas || !cctx) return;
   cctx.clearRect(0,0,confettiCanvas.width, confettiCanvas.height);
   particles.forEach(p=>{
     p.vy += p.g*0.15; p.x += p.vx; p.y += p.vy; p.rot += p.vr; p.life--;
@@ -225,7 +224,6 @@ function confettiLoop(){
 const toastEl = document.getElementById('toast');
 let toastTimer = null;
 function showToast(message){
-  if(!toastEl) return;
   toastEl.textContent = message; toastEl.classList.add('show');
   clearTimeout(toastTimer);
   toastTimer = setTimeout(()=> toastEl.classList.remove('show'), 2600);
@@ -308,69 +306,52 @@ function toggleDropdown(panelId, btnId){
 }
 
 function initToolbar(){
-  const btnHome = document.getElementById('btn-home');
-  const btnProfile = document.getElementById('btn-profile');
-  const btnMute = document.getElementById('btn-mute');
-  const btnContrast = document.getElementById('btn-contrast');
-  const btnDyslexia = document.getElementById('btn-dyslexia');
-  const btnFullscreen = document.getElementById('btn-fullscreen');
-  const btnVoice = document.getElementById('btn-voice');
-  const btnLargeText = document.getElementById('btn-large-text');
-  const btnColorblind = document.getElementById('btn-colorblind');
-  const langSelect = document.getElementById('lang-select');
-  const btnHelpShortcut = document.getElementById('btn-help-shortcut');
-  const btnParentShortcut = document.getElementById('btn-parent-shortcut');
-  const btnSettings = document.getElementById('btn-settings');
-  const btnNotifications = document.getElementById('btn-notifications');
+  document.getElementById('btn-home').addEventListener('click', ()=>{ AudioEngine.click(); showScreen('screen-landing'); });
+  document.getElementById('btn-profile').addEventListener('click', ()=>{ AudioEngine.click(); openProfile(); });
 
-  btnHome?.addEventListener('click', ()=>{ AudioEngine.click(); showScreen('screen-landing'); });
-  btnProfile?.addEventListener('click', ()=>{ AudioEngine.click(); openProfile(); });
-
-  btnMute?.addEventListener('click', ()=>{
+  document.getElementById('btn-mute').addEventListener('click', ()=>{
     state.settings.muted = !state.settings.muted;
     if(state.settings.muted) { AudioEngine.stopAmbient(); AudioEngine.stopNature(); }
     saveState(); applySettingsToDOM();
   });
-  btnContrast?.addEventListener('click', ()=>{
+  document.getElementById('btn-contrast').addEventListener('click', ()=>{
     state.settings.theme = state.settings.theme === 'contrast' ? 'light' : 'contrast';
     saveState(); applySettingsToDOM();
   });
-  btnDyslexia?.addEventListener('click', ()=>{
+  document.getElementById('btn-dyslexia').addEventListener('click', ()=>{
     state.settings.dyslexia = !state.settings.dyslexia; saveState(); applySettingsToDOM();
   });
-  btnFullscreen?.addEventListener('click', ()=>{
+  document.getElementById('btn-fullscreen').addEventListener('click', ()=>{
     if(!document.fullscreenElement) document.documentElement.requestFullscreen?.().catch(()=>{});
     else document.exitFullscreen?.();
   });
-  btnVoice?.addEventListener('click', ()=>{
+  document.getElementById('btn-voice').addEventListener('click', ()=>{
     state.settings.voice = !state.settings.voice; saveState(); applySettingsToDOM();
     if(state.settings.voice) speak('Voice guidance is on. I will read helpful instructions out loud.');
   });
-  btnLargeText?.addEventListener('click', ()=>{
+  document.getElementById('btn-large-text').addEventListener('click', ()=>{
     state.settings.largeText = !state.settings.largeText; saveState(); applySettingsToDOM();
   });
-  btnColorblind?.addEventListener('click', ()=>{
+  document.getElementById('btn-colorblind').addEventListener('click', ()=>{
     state.settings.colorBlind = !state.settings.colorBlind; saveState(); applySettingsToDOM();
   });
-  langSelect?.addEventListener('change', e=>{
+  document.getElementById('lang-select').addEventListener('change', e=>{
     state.settings.lang = e.target.value; saveState();
     showToast('🌐 More full translations are coming soon — English content shown for now!');
   });
-  btnHelpShortcut?.addEventListener('click', ()=>{
-    const panelSettings = document.getElementById('panel-settings');
-    panelSettings && (panelSettings.hidden = true);
+  document.getElementById('btn-help-shortcut').addEventListener('click', ()=>{
+    document.getElementById('panel-settings').hidden = true;
     renderDashboard(); showScreen('screen-dashboard');
-    setTimeout(()=> document.getElementById('help-center-section')?.scrollIntoView({behavior:'smooth'}), 200);
+    setTimeout(()=> document.getElementById('help-center-section').scrollIntoView({behavior:'smooth'}), 200);
   });
-  btnParentShortcut?.addEventListener('click', ()=>{
-    const panelSettings = document.getElementById('panel-settings');
-    panelSettings && (panelSettings.hidden = true);
+  document.getElementById('btn-parent-shortcut').addEventListener('click', ()=>{
+    document.getElementById('panel-settings').hidden = true;
     renderDashboard(); showScreen('screen-dashboard');
-    setTimeout(()=> document.getElementById('parent-zone-section')?.scrollIntoView({behavior:'smooth'}), 200);
+    setTimeout(()=> document.getElementById('parent-zone-section').scrollIntoView({behavior:'smooth'}), 200);
   });
 
-  btnSettings?.addEventListener('click', ()=> toggleDropdown('panel-settings','btn-settings'));
-  btnNotifications?.addEventListener('click', ()=> toggleDropdown('panel-notifications','btn-notifications'));
+  document.getElementById('btn-settings').addEventListener('click', ()=> toggleDropdown('panel-settings','btn-settings'));
+  document.getElementById('btn-notifications').addEventListener('click', ()=> toggleDropdown('panel-notifications','btn-notifications'));
   document.addEventListener('click', e=>{
     if(!e.target.closest('.dropdown-wrap')){
       document.querySelectorAll('.dropdown-panel').forEach(p=> p.hidden = true);
@@ -434,6 +415,11 @@ function initLanding(){
   const dayIndex = Math.floor(Date.now() / 86400000) % DAILY_QUOTES.length;
   document.getElementById('daily-quote').textContent = '💭 ' + DAILY_QUOTES[dayIndex];
   renderFooter(document.getElementById('landing-footer'));
+
+  // Feature cards are real shortcuts — tapping one jumps straight into that game
+  document.querySelectorAll('#features-grid [data-activity]').forEach(card=>{
+    card.addEventListener('click', ()=> openActivity(card.dataset.activity));
+  });
 }
 
 /* ---------- 8) AVATAR BUILDER ---------- */

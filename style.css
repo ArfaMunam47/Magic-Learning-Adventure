@@ -199,7 +199,7 @@ button, .dashboard-card, .avatar-choice, .drag-chip, .drop-zone{ min-height:44px
   background:
     conic-gradient(from 180deg at 50% 100%,
       #FF9AA2, #FFD66B, #B6ECD2, #AEE1F9, #C9B6E4, #FF9AA2) border-box;
-   mask: linear-gradient(#fff 0 0) padding-box, linear-gradient(#fff 0 0);
+  -webkit-mask: linear-gradient(#fff 0 0) padding-box, linear-gradient(#fff 0 0);
   -webkit-mask-composite: xor; mask-composite: exclude;
   opacity:.55; animation: rainbowGlow 6s ease-in-out infinite;
 }
