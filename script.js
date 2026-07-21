@@ -420,6 +420,43 @@ function initLanding(){
   document.querySelectorAll('#features-grid [data-activity]').forEach(card=>{
     card.addEventListener('click', ()=> openActivity(card.dataset.activity));
   });
+
+  initHeroEffects();
+}
+
+/* Purely decorative: a few drifting dust particles + gentle mouse parallax
+   on the hero's floating decorations. No app state or logic involved. */
+function initHeroEffects(){
+  const field = document.getElementById('hero-particles');
+  if(field && !field.dataset.built){
+    field.dataset.built = 'true';
+    for(let i=0;i<10;i++){
+      const dot = document.createElement('span');
+      dot.style.left = (Math.random()*100) + '%';
+      dot.style.animationDuration = (7 + Math.random()*6) + 's';
+      dot.style.animationDelay = (Math.random()*8) + 's';
+      field.appendChild(dot);
+    }
+  }
+  const hero = document.getElementById('hero');
+  const decorItems = document.querySelectorAll('#hero-decor [data-depth]');
+  if(hero && decorItems.length && !hero.dataset.parallaxBound){
+    hero.dataset.parallaxBound = 'true';
+    if(!window.matchMedia('(pointer: coarse)').matches){
+      hero.addEventListener('mousemove', e=>{
+        const rect = hero.getBoundingClientRect();
+        const px = (e.clientX - rect.left) / rect.width - 0.5;
+        const py = (e.clientY - rect.top) / rect.height - 0.5;
+        decorItems.forEach(el=>{
+          const depth = parseFloat(el.dataset.depth) || 1;
+          el.style.transform = `translate(${(px*14*depth).toFixed(1)}px, ${(py*14*depth).toFixed(1)}px)`;
+        });
+      });
+      hero.addEventListener('mouseleave', ()=>{
+        decorItems.forEach(el=> el.style.transform = '');
+      });
+    }
+  }
 }
 
 /* ---------- 8) AVATAR BUILDER ---------- */

@@ -1,0 +1,221 @@
+/* =========================================================================
+   HERO PREMIUM — loaded last. Pure visual redesign of the hero, CTA,
+   navbar glass treatment, and a full premium dark/night theme.
+   No IDs, functions or markup logic touched — decorative layer only.
+   ========================================================================= */
+
+/* ---------- Premium pastel palette tokens ---------- */
+:root{
+  --p-lavender:#C9B6F5;
+  --p-sky:#AEE1F9;
+  --p-mint:#B7EFD0;
+  --p-peach:#FFD3B6;
+  --p-pink:#FFC2D8;
+  --p-yellow:#FFE9A8;
+}
+
+/* =========================================================================
+   HERO
+   ========================================================================= */
+.hero{
+  position:relative;
+  min-height: 72vh;
+  display:flex; align-items:center; justify-content:center;
+  padding: 60px 24px 70px;
+  overflow:hidden;
+  background:
+    radial-gradient(60% 50% at 20% 15%, rgba(201,182,245,.35), transparent 70%),
+    radial-gradient(55% 45% at 85% 10%, rgba(255,211,182,.30), transparent 70%),
+    radial-gradient(70% 60% at 50% 100%, rgba(183,239,208,.30), transparent 70%),
+    linear-gradient(180deg, #EAF4FF 0%, #F3EEFF 55%, #FDF3EE 100%);
+}
+[data-theme="dark"] .hero{
+  background:
+    radial-gradient(60% 50% at 20% 10%, rgba(139,92,246,.25), transparent 70%),
+    radial-gradient(55% 45% at 85% 5%, rgba(56,189,248,.18), transparent 70%),
+    linear-gradient(180deg, #0F0C24 0%, #171335 55%, #1D1740 100%);
+}
+
+/* Soft blurred color blobs instead of the old oversized ring */
+.hero-glow-a, .hero-glow-b{ position:absolute; border-radius:50%; filter: blur(70px); pointer-events:none; z-index:0; }
+.hero-glow-a{ width:320px; height:320px; top:-40px; left:6%; background: radial-gradient(circle, var(--p-lavender), transparent 70%); opacity:.5; animation: heroDrift 12s ease-in-out infinite; }
+.hero-glow-b{ width:280px; height:280px; bottom:-30px; right:8%; background: radial-gradient(circle, var(--p-peach), transparent 70%); opacity:.45; animation: heroDrift 15s ease-in-out infinite reverse; }
+@keyframes heroDrift{ 0%,100%{ transform: translate(0,0);} 50%{ transform: translate(24px,-18px);} }
+
+/* Gentle light rays — subtle, not a giant ring */
+.hero-rays{
+  position:absolute; inset:0; z-index:0; pointer-events:none; opacity:.35;
+  background: conic-gradient(from 200deg at 50% -10%, transparent 0deg, rgba(255,255,255,.6) 8deg, transparent 20deg, transparent 340deg, rgba(255,255,255,.5) 352deg, transparent 360deg);
+  animation: raysTurn 40s linear infinite;
+}
+[data-theme="dark"] .hero-rays{ opacity:.15; background: conic-gradient(from 200deg at 50% -10%, transparent 0deg, rgba(180,160,255,.5) 8deg, transparent 20deg, transparent 340deg, rgba(120,190,255,.4) 352deg, transparent 360deg); }
+@keyframes raysTurn{ to{ transform: rotate(360deg); } }
+
+/* Floating dust particles — small, GPU-accelerated (transform+opacity only) */
+.hero-particles{ position:absolute; inset:0; z-index:0; pointer-events:none; overflow:hidden; }
+.hero-particles span{
+  position:absolute; bottom:-10px; width:5px; height:5px; border-radius:50%;
+  background: rgba(255,255,255,.9); box-shadow: 0 0 6px 2px rgba(255,255,255,.6);
+  animation: dustRise linear infinite;
+}
+[data-theme="dark"] .hero-particles span{ background: rgba(180,200,255,.9); box-shadow: 0 0 8px 3px rgba(140,160,255,.6); }
+@keyframes dustRise{ 0%{ transform: translateY(0) scale(.6); opacity:0;} 15%{ opacity:.9;} 100%{ transform: translateY(-60vh) scale(1.1); opacity:0;} }
+
+/* Reduced decorations (~60% fewer than before) with subtle parallax via --px/--py */
+.hero-decor{ position:absolute; inset:0; z-index:1; pointer-events:none; }
+.hero-decor span{ position:absolute; display:inline-block; will-change: transform; transition: transform .3s ease-out; }
+.hero-decor .balloon.b1{ top:18%; left:9%; font-size:2.2rem; animation: floatY 6s ease-in-out infinite; opacity:.9; }
+.hero-decor .hero-cloud.c1{ top:14%; right:12%; font-size:2rem; animation: floatY 8s ease-in-out infinite; opacity:.8; }
+.hero-decor .hero-cloud.c2{ bottom:16%; left:14%; font-size:1.5rem; animation: floatY 9s ease-in-out infinite 1s; opacity:.7; }
+.hero-decor .hero-sparkle.s1{ top:26%; right:22%; font-size:1.3rem; animation: twinkle 3s ease-in-out infinite; }
+.hero-decor .hero-sparkle.s2{ bottom:22%; right:8%; font-size:1.1rem; animation: twinkle 3.4s ease-in-out infinite .6s; }
+
+/* ---------- Glass hero card ---------- */
+.hero-card{
+  position:relative; z-index:2;
+  display:flex; align-items:center; justify-content:center; gap:44px;
+  max-width: 980px; width:100%; margin:0 auto;
+  padding: 48px 56px;
+  background: rgba(255,255,255,.55);
+  border: 1px solid rgba(255,255,255,.8);
+  border-radius: 40px;
+  backdrop-filter: blur(18px) saturate(140%);
+  -webkit-backdrop-filter: blur(18px) saturate(140%);
+  box-shadow: 0 30px 60px -20px rgba(120,100,180,.28), inset 0 1px 0 rgba(255,255,255,.9);
+  animation: heroCardIn .9s cubic-bezier(.2,.8,.3,1);
+}
+@keyframes heroCardIn{ from{ opacity:0; transform: translateY(24px) scale(.98);} to{ opacity:1; transform:none; } }
+[data-theme="dark"] .hero-card{
+  background: rgba(28,24,58,.55); border-color: rgba(255,255,255,.1);
+  box-shadow: 0 30px 60px -20px rgba(0,0,0,.5), inset 0 1px 0 rgba(255,255,255,.06), 0 0 40px rgba(139,92,246,.15);
+}
+
+.hero-mascot-wrap{ position:relative; flex-shrink:0; display:flex; align-items:center; justify-content:center; }
+.mascot-glow{
+  position:absolute; width:220px; height:220px; border-radius:50%;
+  background: radial-gradient(circle, rgba(255,214,107,.55), transparent 70%);
+  filter: blur(24px); animation: glowPulse 4s ease-in-out infinite;
+}
+[data-theme="dark"] .mascot-glow{ background: radial-gradient(circle, rgba(139,92,246,.5), rgba(56,189,248,.25) 60%, transparent 75%); }
+@keyframes glowPulse{ 0%,100%{ opacity:.7; transform: scale(1);} 50%{ opacity:1; transform: scale(1.12);} }
+.hero-mascot{
+  position:relative; width: 210px; z-index:1;
+  filter: drop-shadow(0 18px 20px rgba(120,100,180,.35));
+  animation: floatY 4.2s ease-in-out infinite;
+}
+
+.hero-text{ text-align:left; max-width:520px; }
+.hero-title{
+  font-size: clamp(2.1rem, 4.4vw, 3.4rem); font-weight:800; line-height:1.1;
+  margin:0 0 14px; letter-spacing:-0.01em;
+  background: linear-gradient(90deg,#FF8FAB,#FFC15E,#7FD79A,#6FA8DC,#C9A0FF);
+  background-size: 260% auto; -webkit-background-clip:text; background-clip:text; color:transparent;
+  animation: shimmerText 8s linear infinite;
+  text-shadow: none; filter: drop-shadow(0 2px 10px rgba(139,92,246,.18));
+}
+[data-theme="dark"] .hero-title{ filter: drop-shadow(0 2px 16px rgba(139,92,246,.4)); }
+.hero-subtitle{
+  font-size: clamp(1.05rem, 1.8vw, 1.3rem); font-weight:600; line-height:1.6;
+  color: var(--ink); opacity:.85; margin: 0 0 30px;
+}
+[data-theme="dark"] .hero-subtitle{ color:#EDE9FF; opacity:.85; }
+.hero-quote{ margin-top:22px; font-weight:600; color: var(--ink-soft); font-style:italic; opacity:.9; }
+
+/* Disable the older hero pseudo-element orbs (superseded by the new,
+   more controlled .hero-glow-a/.hero-glow-b elements above) */
+.hero::before, .hero::after{ content:none !important; }
+
+/* =========================================================================
+   CTA BUTTON — premium glass 3D
+   ========================================================================= */
+.btn-start{
+  position:relative; isolation:isolate; overflow:hidden;
+  font-family: var(--font-display); font-size:1.25rem; font-weight:800; color:#5A3B1F;
+  padding:18px 40px; border-radius:50px; border:1px solid rgba(255,255,255,.6);
+  background: linear-gradient(135deg, rgba(255,214,138,.9), rgba(255,159,178,.85) 55%, rgba(201,182,245,.85));
+  backdrop-filter: blur(6px);
+  box-shadow:
+    0 1px 0 rgba(255,255,255,.8) inset,
+    0 14px 0 -6px rgba(232,137,95,.55),
+    0 22px 40px -12px rgba(139,92,246,.45);
+  animation: ctaBreathe 4s ease-in-out infinite;
+  transition: transform .2s cubic-bezier(.34,1.56,.64,1), box-shadow .2s ease;
+}
+@keyframes ctaBreathe{
+  0%,100%{ transform: translateY(0) scale(1); box-shadow: 0 1px 0 rgba(255,255,255,.8) inset, 0 14px 0 -6px rgba(232,137,95,.55), 0 22px 40px -12px rgba(139,92,246,.45); }
+  50%{ transform: translateY(-3px) scale(1.015); box-shadow: 0 1px 0 rgba(255,255,255,.8) inset, 0 16px 0 -6px rgba(232,137,95,.55), 0 30px 50px -12px rgba(139,92,246,.55); }
+}
+.btn-start:hover{ transform: translateY(-6px) scale(1.04); animation-play-state: paused; }
+.btn-start:active{ transform: translateY(1px) scale(.99); }
+.btn-start::before{ content:none; }
+.btn-start::after{
+  content:''; position:absolute; top:0; left:-60%; width:40%; height:100%;
+  background: linear-gradient(120deg, transparent, rgba(255,255,255,.75), transparent);
+  transform: skewX(-20deg); transition: left .7s ease;
+}
+.btn-start:hover::after{ left:130%; }
+[data-theme="dark"] .btn-start{
+  color:#2A1B4A; border-color: rgba(255,255,255,.25);
+  background: linear-gradient(135deg, #FFD68A, #FF9FCF 55%, #B6A6FF);
+  box-shadow: 0 1px 0 rgba(255,255,255,.4) inset, 0 14px 0 -6px rgba(120,70,160,.5), 0 0 40px rgba(180,140,255,.5);
+}
+
+/* =========================================================================
+   NAVBAR — glassmorphism, larger targets, smoother states
+   ========================================================================= */
+.app-toolbar{
+  background: rgba(255,255,255,.62) !important;
+  backdrop-filter: blur(16px) saturate(160%);
+  -webkit-backdrop-filter: blur(16px) saturate(160%);
+  border-bottom: 1px solid rgba(255,255,255,.5) !important;
+  box-shadow: 0 8px 28px rgba(120,100,180,.14) !important;
+}
+[data-theme="dark"] .app-toolbar{
+  background: rgba(20,17,42,.6) !important; border-bottom-color: rgba(255,255,255,.08) !important;
+  box-shadow: 0 8px 28px rgba(0,0,0,.4) !important;
+}
+.tool-btn, .stat-pill, .tool-btn-logo{ transition: transform .18s cubic-bezier(.34,1.56,.64,1), box-shadow .18s ease, background .18s ease; }
+.tool-btn{ width:44px; height:44px; }
+.tool-btn:hover{ transform: translateY(-3px) scale(1.06); box-shadow: 0 8px 18px rgba(139,92,246,.22); }
+.tool-btn[aria-pressed="true"]{ box-shadow: 0 0 0 3px rgba(139,92,246,.25); }
+[data-theme="dark"] .tool-btn{ background: rgba(255,255,255,.06); border-color: rgba(255,255,255,.1); }
+[data-theme="dark"] .tool-btn:hover{ background: rgba(255,255,255,.12); box-shadow: 0 0 16px rgba(139,92,246,.4); }
+[data-theme="dark"] .stat-pill{ background: rgba(255,255,255,.06); border-color: rgba(255,255,255,.1); color:#EDE9FF; }
+[data-theme="dark"] .stat-pill b{ color:#EDE9FF; }
+
+/* =========================================================================
+   NIGHT MODE — full premium redesign, not just inverted colors
+   ========================================================================= */
+[data-theme="dark"] body{
+  background:
+    radial-gradient(1px 1px at 10% 20%, #fff, transparent), radial-gradient(1px 1px at 80% 15%, #fff, transparent),
+    radial-gradient(1px 1px at 60% 70%, #fff, transparent), radial-gradient(1px 1px at 30% 85%, #fff, transparent),
+    radial-gradient(1px 1px at 90% 60%, #fff, transparent), radial-gradient(1px 1px at 45% 40%, #fff, transparent),
+    linear-gradient(160deg, #0E0B22 0%, #171335 45%, #1E1740 75%, #241A44 100%);
+}
+[data-theme="dark"] body::after{
+  content:''; position:fixed; inset:0; z-index:-1; pointer-events:none; opacity:.35; mix-blend-mode:screen;
+  background: linear-gradient(120deg, rgba(139,92,246,.25), rgba(56,189,248,.18) 40%, rgba(255,159,178,.15) 70%, transparent);
+  background-size:200% 200%; animation: auroraShift 18s ease-in-out infinite;
+}
+@keyframes auroraShift{ 0%,100%{ background-position: 0% 50%; } 50%{ background-position: 100% 50%; } }
+
+[data-theme="dark"] .feature-card, [data-theme="dark"] .game-card, [data-theme="dark"] .widget-card,
+[data-theme="dark"] .story-card, [data-theme="dark"] .stat-card, [data-theme="dark"] .testimonial-card,
+[data-theme="dark"] .profile-card, [data-theme="dark"] .profile-stats-card, [data-theme="dark"] .game-shell{
+  background: rgba(30,26,58,.55) !important;
+  border: 1px solid rgba(255,255,255,.08);
+  backdrop-filter: blur(14px);
+  box-shadow: 0 20px 40px rgba(0,0,0,.4), inset 0 1px 0 rgba(255,255,255,.05);
+}
+[data-theme="dark"] .btn-play:not(:disabled){ box-shadow: 0 5px 0 #A8652E, 0 0 24px rgba(255,159,90,.45); }
+[data-theme="dark"] .dash-section-title h2{ filter: drop-shadow(0 0 12px rgba(139,92,246,.5)); }
+
+@media (prefers-reduced-motion: reduce){
+  .hero-glow-a, .hero-glow-b, .hero-rays, .hero-particles span, .btn-start, body::after{ animation:none !important; }
+}
+@media (max-width: 900px){
+  .hero-card{ flex-direction:column; text-align:center; padding: 40px 28px; gap:24px; }
+  .hero-text{ text-align:center; }
+  .hero-mascot{ width:170px; }
+}

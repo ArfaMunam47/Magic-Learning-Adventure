@@ -11,6 +11,7 @@
 <link rel="stylesheet" href="style.css">
 <link rel="stylesheet" href="dashboard.css">
 <link rel="stylesheet" href="premium.css">
+<link rel="stylesheet" href="hero-premium.css">
 </head>
 <body data-theme="light" data-dyslexia="off">
 
@@ -99,18 +100,34 @@
 <section id="screen-landing" class="screen active" aria-label="Welcome page">
 
   <!-- HERO -->
-  <div class="hero">
-    <div class="rainbow-arc" aria-hidden="true"></div>
-    <div class="balloon b1" aria-hidden="true">🎈</div>
-    <div class="balloon b2" aria-hidden="true">🎈</div>
-    <div class="balloon b3" aria-hidden="true">🎈</div>
-    <img class="hero-mascot" src="assets/images/mascot.svg" alt="Sparkle the star wizard waving hello">
-    <h1 class="hero-title">Magic Learning Adventure</h1>
-    <p class="hero-subtitle">Learn, Play, Smile, and Grow Together.</p>
-    <button class="btn-start" id="btn-start-adventure">
-      <span class="btn-start-icon">🚀</span> Start Adventure
-    </button>
-    <p class="hero-quote" id="daily-quote">Loading today's happy thought…</p>
+  <div class="hero" id="hero">
+    <div class="hero-glow-a" aria-hidden="true"></div>
+    <div class="hero-glow-b" aria-hidden="true"></div>
+    <div class="hero-rays" aria-hidden="true"></div>
+    <div class="hero-particles" id="hero-particles" aria-hidden="true"></div>
+
+    <div class="hero-decor" id="hero-decor" aria-hidden="true">
+      <span class="balloon b1" data-depth="1.4">🎈</span>
+      <span class="hero-cloud c1" data-depth="0.6">☁️</span>
+      <span class="hero-cloud c2" data-depth="0.9">☁️</span>
+      <span class="hero-sparkle s1" data-depth="1.8">✨</span>
+      <span class="hero-sparkle s2" data-depth="1.2">⭐</span>
+    </div>
+
+    <div class="hero-card">
+      <div class="hero-mascot-wrap">
+        <div class="mascot-glow" aria-hidden="true"></div>
+        <img class="hero-mascot" src="assets/images/mascot.svg" alt="Sparkle the star wizard waving hello">
+      </div>
+      <div class="hero-text">
+        <h1 class="hero-title">Magic Learning Adventure</h1>
+        <p class="hero-subtitle">Learn, Play, Smile, and Grow Together.</p>
+        <button class="btn-start" id="btn-start-adventure">
+          <span class="btn-start-icon">🚀</span> Start Adventure
+        </button>
+        <p class="hero-quote" id="daily-quote">Loading today's happy thought…</p>
+      </div>
+    </div>
   </div>
 
   <!-- STATS -->
